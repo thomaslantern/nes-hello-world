@@ -22,24 +22,9 @@ nmihandler:
 	plp
 	pla
 
-backgroundupdate:
-	ldx #$20
-	stx $2006
-	ldx #$00
-	stx $2006
-	ldx #$00
-	stx $2007
-	stx $2007
-
+	lda #$02
+	sta $4014
 	
-	ldx #$00 	; Set SPR-RAM address to 0
-	stx $2003
-spriteloop:
-	lda hello,x
-	sta $2004
-	inx
-	cpx #$34
-	bne spriteloop
 	rti
 
 
@@ -53,7 +38,40 @@ startgame:
 
 	ldx #$ff
 	txs
-	
+	inx
+	stx $2000
+	stx $2001
+	stx $4015
+	stx $4010
+	lda #$40
+	sta $4017
+	lda #0	
+waitvblank:
+	bit $2002
+	bpl waitvblank
+	lda #0
+clearmemory:
+	sta $0000,x
+	sta $0100,x
+	sta $0300,x
+	sta $0400,x
+	sta $0500,x
+	sta $0600,x
+	sta $0700,x
+	lda #$FF
+	sta $0200,x
+	lda #$00
+	inx
+	cpx #$00
+	bne clearmemory
+		
+
+
+
+waitvblank2:
+	bit $2002
+	bpl waitvblank2
+
 	lda $2002
 	ldx #$3F
 	stx $2006
@@ -65,12 +83,23 @@ copypalloop:
 	inx
 	cpx #4
 	bcc copypalloop
-	
+	lda #$02
+	sta $4014
+
+;LOADING SPRITES
+	LDX #$00
+LOADSPRITES:
+	LDA hello,x
+	STA $0200,x
+	INX
+	CPX #$2C
+	BNE LOADSPRITES
+
+	lda #%10010000
+	sta $2000
 
 	lda #%00011110
 	sta $2001
-	lda #$90
-	sta $2000
 
 
 forever:
@@ -82,9 +111,6 @@ initial_palette:
 	db $1F,$21,$33,$30
 
 hello:
-	db $00, $00, $00, $00 ; not sure why necessary
-	db $00, $00, $00, $00 ; not sure why necessary
-
 	db $6c, $00, $00, $3d ; H
 	db $6c, $01, $00, $46 ; E
 	db $6c, $02, $00, $4f ; L
