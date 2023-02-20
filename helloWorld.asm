@@ -13,8 +13,6 @@
 ; The nmihandler is basically the code that runs
 ; every time the screen refreshes, which happens
 ; about 60 times a second.
-
-
 nmihandler:
 	lda #$02 	; Transfer sprite data from
 	sta $4014	; from $0200 to DMA
@@ -57,54 +55,62 @@ clearmemory:		; Clear all memory info
 	sta $0200,x	; Load $FF into $0200 to 
 	lda #$00	; hide sprites 
 	inx		; x goes to 1, 2... 255
-	cpx #$00	; loop ends after 256 times
+	cpx #$00	; loop ends after 256 times,
 	bne clearmemory ; clearing all memory
 		
 
 
 
 waitvblank2:
-	bit $2002	; check PPU Status one more time
+	bit $2002	; Check PPU Status one more time
 	bpl waitvblank2	; before we start loading in graphics
 
-	lda $2002	; read PPU status to reset high-low latch
+	lda $2002	; Read PPU status to reset high-low latch
 	ldx #$3F	; Load high byte of $3F00 into $2006
 	stx $2006
 	ldx #$00	; Load low byte of $3F00 into $2006
 	stx $2006
 copypalloop:	
-	lda initial_palette,x	; start storing palette info
+	lda initial_palette,x	; Start storing palette info
 	sta $2007
 	inx
 	cpx #4			
 	bcc copypalloop
 
-	lda #$02	; store sprite info 
+	lda #$02	; Store sprite info 
 	sta $4014	; into OAM DMA
 
-;LOADING SPRITES
+; Loop to load sprites onto screen
 	LDX #$00
-LOADSPRITES:
-	LDA hello,x
+spriteload:
+	LDA hello,x	; Load tiles, x and y attributes
 	STA $0200,x
 	INX
-	CPX #$2C
-	BNE LOADSPRITES
+	CPX #$2C	; Loading 44 (2C in hex) tiles
+	BNE spriteload
 
-	lda #%10010000
-	sta $2000
+	lda #%10010000	; Enable NMI on vblank, and use
+	sta $2000	; $1000 as background tile address
 
-	lda #%00011110
-	sta $2001
+	lda #%00011110	; Turn on sprites, background,
+	sta $2001	; and clipping for both
 
-
+; Necessary loop to keep program running
 forever:
 	jmp forever
 
 
-
+; This is the palette for this tutorial.
+; Each byte is one colour.
 initial_palette:
 	db $1F,$21,$33,$30
+
+
+; This is the data for our sprite placement.
+; The first byte on each line is the y-coordinate.
+; The second byte is the tile # in memory.
+; The third byte is for flipping tiles.
+; The fourth byte is the x-coordinate.
 
 hello:
 	db $6c, $00, $00, $3d ; H
@@ -120,13 +126,26 @@ hello:
 	db $75, $06, $00, $62 ; D
 	db $75, $07, $00, $6b ; !
 
-
+; This is the footer for our program.
+; It is where we define (in order):
+; - our nmihandler (what we do during vblank)
+; - our reset (here it's called startgame)
+; - our irqhandler (for handling interrupts)
+; We have disabled our irqhandler, but all
+; three are always included in our programs.
 	org $FFFA
 	dw nmihandler
 	dw startgame
 	dw irqhandler
 
-CHRROM_START:
+; After your footer, you include your
+; tile data, which gets stored in CHR-ROM.
+; You can include a file containing this
+; data, so the code is a bit cleaner,
+; but I've included it here so you can see
+; the actual letters for yourself.
+
+chr_rom_start:
 
 	db %11000011	; H (00)
 	db %11000011
@@ -169,7 +188,7 @@ CHRROM_START:
 	db $00, $00, $00, $00, $00, $00, $00, $00
 
 	db %11000011	; W (04)
-	db %11100111
+	db %11000011
 	db %11000011
 	db %11000011
 	db %11011011
@@ -184,7 +203,7 @@ CHRROM_START:
 	db %11000011
 	db %11111100
 	db %11001100
-	db %11100110
+	db %11000110
 	db %11000011
 	db $00, $00, $00, $00, $00, $00, $00, $00
 
@@ -209,8 +228,16 @@ CHRROM_START:
 	db $00, $00, $00, $00, $00, $00, $00, $00
 
 
-CHRROM_END:
+chr_rom_end:
 
-; Pad chr-rom to 8k(to make valid file)
-	ds 8192-(CHRROM_END-CHRROM_START)
+; Lastly, if we do not have enough tiles
+; We need to "pad" our rom to give it
+; the correct file size.
+; If you ever have issues with your .nes
+; file, this might be it! Best to leave
+; this line of code in just to be safe.
+; (If you have the correct size it will
+; add nothing.)
+
+	ds 8192-(chr_rom_end-chr_rom_start)
 
