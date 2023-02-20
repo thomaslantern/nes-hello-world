@@ -1,56 +1,51 @@
+	; Code starts at $C000.
+	; org jump to $BFFO for header info
 
-	org $BFF0
-	db "NES",$1a
-	db $1
-	db $1
-	db %00000000
-	db %00000000
-	db 0
-	db 0,0,0,0,0,0,0
+	org $BFF0	
+	db "NES",$1a		; Default NES header info
+	db $1			; Number of PRG-ROM pages
+	db $1			; Number of CHR-ROM pages
+	db %00000000		; Mapper and otherinfo.
+	db %00000000		; More mapper/other info.
+	db 0			; Number of Ram pages
+	db 0,0,0,0,0,0,0	; Unused 7 bytes
 
-
-curs_x equ $40
-curs_y equ curs_x+1
-
-vblanked equ $7f
+; The nmihandler is basically the code that runs
+; every time the screen refreshes, which happens
+; about 60 times a second.
 
 
 nmihandler:
-	pha
-	php
-		inc vblanked
-	plp
-	pla
-
-	lda #$02
-	sta $4014
-	
+	lda #$02 	; Transfer sprite data from
+	sta $4014	; from $0200 to DMA
 	rti
-
 
 irqhandler:
 	rti
 
 
-startgame:
-	sei
-	cld
+; startgame is code that runs everytime the game 
+; is turned on or reset.
 
-	ldx #$ff
-	txs
-	inx
-	stx $2000
-	stx $2001
-	stx $4015
-	stx $4010
+startgame:
+	sei		; Disable interrupts
+	cld		; Clear decimal mode
+
+	ldx #$ff	
+	txs		; Set-up stack
+	inx		; x is now 0
+	stx $2000	; Disable/reset graphic options 
+	stx $2001	; Make sure screen is off
+	stx $4015	; Disable sound
+	stx $4010	; Disable DMC (sound samples)
 	lda #$40
-	sta $4017
+	sta $4017	; Disable sound IRQ
 	lda #0	
 waitvblank:
-	bit $2002
-	bpl waitvblank
+	bit $2002	; check PPU Status to see if
+	bpl waitvblank	; vblank has occurred.
 	lda #0
-clearmemory:
+clearmemory:		; Clear all memory info
 	sta $0000,x
 	sta $0100,x
 	sta $0300,x
@@ -59,32 +54,33 @@ clearmemory:
 	sta $0600,x
 	sta $0700,x
 	lda #$FF
-	sta $0200,x
-	lda #$00
-	inx
-	cpx #$00
-	bne clearmemory
+	sta $0200,x	; Load $FF into $0200 to 
+	lda #$00	; hide sprites 
+	inx		; x goes to 1, 2... 255
+	cpx #$00	; loop ends after 256 times
+	bne clearmemory ; clearing all memory
 		
 
 
 
 waitvblank2:
-	bit $2002
-	bpl waitvblank2
+	bit $2002	; check PPU Status one more time
+	bpl waitvblank2	; before we start loading in graphics
 
-	lda $2002
-	ldx #$3F
+	lda $2002	; read PPU status to reset high-low latch
+	ldx #$3F	; Load high byte of $3F00 into $2006
 	stx $2006
-	ldx #$00
+	ldx #$00	; Load low byte of $3F00 into $2006
 	stx $2006
-copypalloop:
-	lda initial_palette,x
+copypalloop:	
+	lda initial_palette,x	; start storing palette info
 	sta $2007
 	inx
-	cpx #4
+	cpx #4			
 	bcc copypalloop
-	lda #$02
-	sta $4014
+
+	lda #$02	; store sprite info 
+	sta $4014	; into OAM DMA
 
 ;LOADING SPRITES
 	LDX #$00
