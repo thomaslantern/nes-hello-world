@@ -1,3 +1,5 @@
+	; Hello, World!
+	; by Thomas Wesley Scott, 2023
 	; Code starts at $C000.
 	; org jump to $BFFO for header info
 
@@ -75,7 +77,7 @@ copypalloop:
 	sta $2007
 	inx
 	cpx #4			
-	bcc copypalloop
+	beq copypalloop
 
 	lda #$02	; Store sprite info 
 	sta $4014	; into OAM DMA
@@ -83,11 +85,11 @@ copypalloop:
 ; Loop to load sprites onto screen
 	LDX #$00
 spriteload:
-	LDA hello,x	; Load tiles, x and y attributes
-	STA $0200,x
-	INX
-	CPX #$2C	; Loading 44 (2C in hex) tiles
-	BNE spriteload
+	lda hello,x	; Load tiles, x and y attributes
+	sta $0200,x
+	inx
+	cpx #$2C	; Loading 11 tiles, with 4 attributes each, making 44((2C in hex)
+	bne spriteload
 
 	lda #%10010000	; Enable NMI on vblank, and use
 	sta $2000	; $1000 as background tile address
