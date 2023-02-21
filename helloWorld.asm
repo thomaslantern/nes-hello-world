@@ -230,7 +230,6 @@ chr_rom_start:
 	db $00, $00, $00, $00, $00, $00, $00, $00
 
 
-chr_rom_end:
 
 ; Lastly, if we do not have enough tiles
 ; We need to "pad" our rom to give it
@@ -241,5 +240,6 @@ chr_rom_end:
 ; (If you have the correct size it will
 ; add nothing.)
 
+chr_rom_end:
 	ds 8192-(chr_rom_end-chr_rom_start)
 
