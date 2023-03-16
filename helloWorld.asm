@@ -5,11 +5,11 @@
 
 	org $BFF0	
 	db "NES",$1a		; Default NES header info
-	db $1				; Number of PRG-ROM pages
-	db $1				; Number of CHR-ROM pages
+	db $1			; Number of PRG-ROM pages
+	db $1			; Number of CHR-ROM pages
 	db %00000000		; Mapper and otherinfo.
 	db %00000000		; More mapper/other info.
-	db 0				; Number of Ram pages
+	db 0			; Number of Ram pages
 	db 0,0,0,0,0,0,0	; Unused 7 bytes
 
 ; The nmihandler is basically the code that runs
@@ -28,12 +28,12 @@ irqhandler:
 ; is turned on or reset.
 
 startgame:
-	sei				; Disable interrupts
-	cld				; Clear decimal mode
+	sei			; Disable interrupts
+	cld			; Clear decimal mode
 
 	ldx #$ff	
-	txs				; Set-up stack
-	inx				; x is now 0
+	txs			; Set-up stack
+	inx			; x is now 0
 	stx $2000		; Disable/reset graphic options 
 	stx $2001		; Make sure screen is off
 	stx $4015		; Disable sound
@@ -43,10 +43,10 @@ startgame:
 	lda #0	
 waitvblank:
 	bit $2002		; check PPU Status to see if
-	bpl waitvblank	; vblank has occurred.
+	bpl waitvblank		; vblank has occurred.
 	lda #0
-clearmemory:		; Clear all memory info
-	sta $0000,x 	; from $0000-$07FF
+clearmemory:			; Clear all memory info
+	sta $0000,x 		; from $0000-$07FF
 	sta $0100,x
 	sta $0300,x
 	sta $0400,x
@@ -56,23 +56,23 @@ clearmemory:		; Clear all memory info
 	lda #$FF
 	sta $0200,x		; Load $FF into $0200-$02FF 
 	lda #$00		; to hide sprites 
-	inx				; x goes to 1, 2... 255
+	inx			; x goes to 1, 2... 255
 	cpx #$00		; loop ends after 256 times,
-	bne clearmemory ; clearing all memory
+	bne clearmemory 	; clearing all memory
 		
 
 
 
 waitvblank2:
 	bit $2002		; Check PPU Status one more time
-	bpl waitvblank2	; before we start loading in graphics
+	bpl waitvblank2		; before we start loading in graphics
 
 	lda $2002		; Read PPU status to reset high-low latch
 	ldx #$3F		; Load high byte of $3F00 into $2006
 	stx $2006
 	ldx #$00		; Load low byte of $3F00 into $2006
 	stx $2006
-copypalloop:		; Start storing palette info
+copypalloop:			; Start storing palette info
 	lda initial_palette,x	
 	sta $2007
 	inx
@@ -87,15 +87,15 @@ copypalloop:		; Start storing palette info
 	LDX #$00
 spriteload:
 	lda hello,x		; Loads one of four values into $0200,x:
-	sta $0200,x 	; x-value, tile #, flip options, y-value
+	sta $0200,x 		; x-value, tile #, flip options, y-value
 	inx
 	cpx #$2C		; Loop 44 times (11 tiles with 4 attributes each)
 	bne spriteload
 
-	lda #%10010000	; Enable NMI on vblank, and use
+	lda #%10010000		; Enable NMI on vblank, and use
 	sta $2000		; $1000 as background tile address
 
-	lda #%00011110	; Turn on sprites, background,
+	lda #%00011110		; Turn on sprites, background,
 	sta $2001		; and clipping for both
 
 ; Necessary loop to keep program running
