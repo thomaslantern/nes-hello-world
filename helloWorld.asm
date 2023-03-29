@@ -7,7 +7,7 @@
 	db "NES",$1a		; Default NES header info
 	db $1			; Number of PRG-ROM pages
 	db $1			; Number of CHR-ROM pages
-	db %00000000		; Mapper and otherinfo.
+	db %00000000		; Mapper and other info.
 	db %00000000		; More mapper/other info.
 	db 0			; Number of Ram pages
 	db 0,0,0,0,0,0,0	; Unused 7 bytes
@@ -239,7 +239,7 @@ chr_rom_start:
 ; file, this might be it! (Best to leave
 ; this line of code in just to be safe,
 ; since it guarantees the correct size of
-; ROM data.
+; ROM data.)
 
 chr_rom_end:
 	ds 8192-(chr_rom_end-chr_rom_start)
