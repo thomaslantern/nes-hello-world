@@ -8,6 +8,8 @@ Have you ever wanted to code for the NES, but you don't know how? Have you wante
 <h2>ASM 6502? What's that?</h2>
 ASM 6502 is the aseembly language used to program on the NES. If you've never programmed in an assembly language before, it can be a bit difficult at first, but with a bit of time and patience you can learn it, just like any other language.
 
+I've commented most of the code for this program, so this should help you as far as understanding what's going on with each line of the program, but you will probably need to reference the commands for ASM 6502.
+
 <h1> How to Compile "helloworld.asm" </h1>
 If you're looking to compile the code, you'll need to use the VASM compiler. You can get it here: http://www.compilers.de/vasm.html . It's a great compiler that can be used for a variety of systems, and it was made by Dr. Volker Barthelmann. Check it out! To compile simply use: <code>vasm6502_oldstyle.exe DIR/helloworld.asm -chklabels -nocase -Fbin -o "DIR2/helloworld.nes"</code> where DIR and DIR2 are the paths/directories for the source file and target file, respectively. (If you have the win32 version of vasm, you may need to use vasm_oldstyle_win32.exe instead).
 
