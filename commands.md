@@ -5,18 +5,6 @@
 </head>
 
 <body>
-	<!-- "Skipnav" code idea courtesy of Mike Scott and jimthatcher.com/skipnav.htm-->
-	<div class="skipnav"><a href="#maincontent">Skip to main content</a></div>
-	<div class="openmenu">
-		<ul>
-				<li><a href="index.html">Home</a></li>
-				<li><a href="hardware.html">Hardware Basics</a></li>
-				<li><a href="coding.html">Coding Basics</a></li>
-				<li><a href="programs.html">Sample Programs</a></li>
-				<li><a href="commands.html">Command Table</a></li>
-				<li><a href="resources.html">Other Resources</a></li>
-		</ul>
-	</div><!-- Closing openmenu -->
 		
 	<h1 id = "maincontent"> ASM 6502 Command Table</h1>
 	<p>
@@ -1002,19 +990,6 @@
 		</tr>
 	</table>
 	
-	<div class="footer">
-		<ul>
-			<li><a href="index.html">Home</a></li>
-			<li><a href="hardware.html">Hardware Basics</a></li>
-			<li><a href="coding.html">Coding Basics</a></li>
-			<li><a href="programs.html">Sample Programs</a></li>
-			<li><a href="commands.html">Command Table</a></li>
-			<li><a href="resources.html">Other Resources</a></li>
-				
-		</ul>
-		<p>
-			© 2023 Thomas Wesley Scott
-		</p>
-	</div><!-- Closing footer -->
+	
 </body>
 </html>
