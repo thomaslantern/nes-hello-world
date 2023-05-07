@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<title>Thomas Scott's NES Command Table</title>
-</head>
 
-<body>
-		
 	<h1 id = "maincontent"> ASM 6502 Command Table</h1>
 	<p>
 		Here's a complete list of of all the 6502 commands that work with the NES. Be sure to look at the 
@@ -990,6 +983,3 @@
 		</tr>
 	</table>
 	
-	
-</body>
-</html>
