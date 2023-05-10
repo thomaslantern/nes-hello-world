@@ -3,12 +3,12 @@
 <h1>UNDER CONSTRUCTION!</h1>
 <h1>"Hello, World!"</h1>
 
-Have you ever wanted to code for the NES, but you don't know how? Have you wanted 8-bit programming knowledge, but instead you're stuck with 16 bits of fear? (That's trying to be a joke.) Want to write the next Super Mario Bros.? Your journey begins here! This is my version of "Hello, World" for the NES, and I offer the code to you as an opportunity to begin learning to program for the NES/ASM 6502.
+Have you ever wanted to code for the NES, but you didn't know how? Have you wanted 8-bit programming knowledge, but instead you're stuck with 16 bits of fear? (That's trying to be a joke.) Want to write the next Super Mario Bros.? Your journey begins here! This is my version of "Hello, World" for the NES, and I offer the code to you as an opportunity to begin learning to program for the NES/ASM 6502.
 
 <h2>ASM 6502? What's that?</h2>
 ASM 6502 is the aseembly language used to program on the NES. If you've never programmed in an assembly language before, it can be a bit difficult at first, but with a bit of time and patience you can learn it, just like any other language.
 
-I've commented most of the code for this program, so this should help you as far as understanding what's going on with each line of the program, but you will probably need to reference the commands for ASM 6502.
+I've commented most of the code for this program, so this should help you as far as understanding what's going on with each line of the program, but you will probably need to reference the commands for ASM 6502. My recommendation at this point would be to use CHibiAkumas' great "cheat sheet", which is downloadable for free here: https://www.chibiakumas.com/book/CheatSheetCollection.pdf (I also recommend his book on learning ASM6502 and used it to learn the commands while away from the computer!)
 
 <h1> How to Compile "helloworld.asm" </h1>
 If you're looking to compile the code, you'll need to use the VASM compiler. You can get it here: http://www.compilers.de/vasm.html . It's a great compiler that can be used for a variety of systems, and it was made by Dr. Volker Barthelmann. Check it out! To compile simply use: <code>vasm6502_oldstyle.exe DIR/helloworld.asm -chklabels -nocase -Fbin -o "DIR2/helloworld.nes"</code> where DIR and DIR2 are the paths/directories for the source file and target file, respectively. (If you have the win32 version of vasm, you may need to use vasm_oldstyle_win32.exe instead).
