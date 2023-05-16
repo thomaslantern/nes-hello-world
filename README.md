@@ -22,7 +22,7 @@ There is a lot to take in here, for what should be a simple program! "Hello, Wor
 
 
 
-<h1>insert thing about compiler comparisons</h1>
-
+<h1>Differences in Compilers</h1>
+A lot of NES programmers use a different compiler than VASM, ca65 (which is a companion assembler to the cc65 crosscompiler). As a consequence, their code will look a little different than what you see here; in particular, the layout of where all of the code is placed will be different. For the sake of learning the code from this tutorial, please don't worry about it for now. At first I found it a bit confusing, but I found that once I understood the basic code and its layout using the VASM compiler, reading code for the ca65 was nearly effortless. I'm confident the same will happen for you! For now just focus on learning with VASM and you can always make the switch later if necessary. 
 <h1>License</h1>
 Feel free to copy this code, modify it, and use it for either personal or commercial purposes. If you manage to sell a cartridge copy of "Hello, World!", let me know! I'd love to see it ;)
