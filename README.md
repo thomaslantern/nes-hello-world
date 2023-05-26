@@ -17,7 +17,11 @@ If you're looking to compile the code, you'll need to use the VASM compiler. You
 Assuming you've successfully followed the steps to compile above, you should now have an .nes file, "helloworld.nes". This file can be run in any NES (Nintendo Entertainment System) emulator. I tend to use Nestopia, but other NES developers really seem to enjoy FCEUX, so use whichever emulator you like to run it!
 
 <h1>How to Use (and Learn From) "helloworld.asm"</h1>
-There is a lot to take in here, for what should be a simple program! "Hello, World!" in Python is 1 line of code. In C++, it's 4 or 5 lines. In ASM 6502 (NES Aassembly Code)? Well... including spaces and comments we're clocking in at around 250 lines of code. Yikes! But fear not! While there is much to learn, we will take it step by step, and you'll see it's not so bad. I've taken great pains to comment just about every line of code in this sample program, so you should at least have an easier time figuring it out.
+For what should be a simple program, there sure is a lot of code! 
+"Hello, World!" in Python is 1 line of code. 
+In C++, it's 4 or 5 lines. 
+In ASM 6502 (NES Aassembly Code)? Well... including spaces and comments we're clocking in at around 250 lines of code. Yikes! 
+But fear not! While there is much to learn, we will take it step by step, and you'll see it's not so bad. I've taken great pains to comment just about every line of code in this sample program, so you should at least have an easier time figuring it out.
 
 
 
