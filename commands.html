@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Thomas Scott's NES Command Table</title>
+	<link href="styles/commandstyle.css" rel="stylesheet" type="text/css">
+	<link rel = "shortcut icon" type="image/x-icon" href="images/tinyico.png">
+
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Learn ASM 6502 and NES Programming Here.">
+	<meta property="og:image" content="images/ognes.png">
+	<meta name="keywords" content="ASM 6502, learn asm 6502, nes programming, asm 6502 programming, 
+	nintendo programming, program nintendo games, how to make nes games">
+
+</head>
+
+<body>
+	<!-- "Skipnav" code idea courtesy of Mike Scott and jimthatcher.com/skipnav.htm-->
+	<div class="skipnav"><a href="#tableContent">Skip to main content</a></div>
+	<div class="openmenu">
+		<a href = "index.html">
+		<img id = "logo" src="images/neslogo.png" alt="logo" height="60px">
+		<div class="title">6502 With Thomas</div>
+		</a>
+		<button class="toggle-mode js-toggle-mode"><span id="sunmoon" aria-hidden="true"></span></button>
+		<ul>
+			<li><a href="index.html" class="home">Home</a></li>
+			<li><a href="hardware.html" class="hardware">Hardware Basics</a></li>
+			<li><a href="coding.html" class="coding">Coding Basics</a></li>
+			<li><a href="programs.html" class="programs">Sample Programs</a></li>
+			<li><a href="commands.html" class="command">Command Table</a></li>
+			<li><a href="resources.html" class="resources">Other Resources</a></li>
+				
+		</ul>
+	</div><!-- Closing openmenu -->
+		
+	<h1 id = "tableContent"> ASM 6502 Command Table</h1>
+	<p>
+		Here's a complete list of of all the 6502 commands that work with the NES. Be sure to look at the 
+		page on coding basics if you haven't already, as it should give you a solid foundation to get started 
+		coding:
+		<a href="coding.html">Coding Basics</a>
+	</p>
+
+	<p> 
+		I've written example snippets of code for each command. To see some of them in greater context with a 
+		bigger program, you can look at the sample programs here:
+		<a href="programs.html">Sample Programs</a>
+	</p>
+
+	<p>
+		A big thanks to the ChibiAkumas 6502 website
+		<a class="inline" href="https://www.chibiakumas.com/6502"> (https://www.chibiakumas.com)</a>, which 
+		is a great site for learning about ASM 6502, or many other assembly languages for a variety of gaming 
+		(and general-purpose) systems. A lot of the information I gathered for the commands for the 6502 came 
+		from this site, as it's one of the first places I learned about ASM6502/NES programming, and I still 
+		visit the site frequently!
+	</p>
+
+	<p>
+		Note: All comments in ASM6502 begin with a semi-colon(;)
+	</p>
+	<div  id = "command-table">
+	<table>
+		<tr>
+			<td>Command</td>
+			<td>Description</td>
+			<td>Example</td>
+			<td>Notes</td>
+			<td>Flags Affected</td>
+		</tr>
+
+		<tr>
+			<td>ADC</td>
+			<td>Add with carry. Adds whatever number you choose, plus 1 if the carry flag is set.</td>
+			<td>
+	<pre><code>
+	clc ; clears carry flag
+	lda #1 ; load 1 into accumulator
+	adc #3 ; adds 3 to accumulator (now 4)
+	</code></pre>
+			</td>
+			<td>If carry flag is set, will add additional 1 to total - be sure to clear the carry with 
+			CLC first, if necessary! </td>
+			<td>N,Z,C,V</td>
+		</tr>
+
+		<tr>
+			<td>AND</td>
+			<td>Compares bit values in accumulator with another value, and returns a 1 to each bit of the 
+			accumulator if that bit is a 1 in both.</td>
+			<td>
+	<pre><code>
+	lda #%11011111 
+	and #%11110000 ; accumulator is now 11010000.
+	</code></pre>
+			</td>
+			<td>Great way to check if conditions are met in a game (by using each bit as a separate 
+			condition, for example).</td>
+			<td>N,Z,C</td>
+		</tr>
+		
+		<tr>
+			<td>ASL</td>
+			<td>Arithmetic shift left of the value in the accumulator. Moves all bits to the left. Bit 7 
+			moves to the carry.</td>
+			<td>
+	<pre><code>
+	lda #%10101010 
+	asl ; accumulator now %01010100, sets carry
+	asl ; accumulator now %10101000, carry no longer set
+	</code></pre>
+			</td>
+		
+			<td>Affects carry if bit in bit 7 is 1. </td>
+			<td>C</td>
+		</tr>
+
+		<tr>
+			<td><span class="branch">Branch Commands</span></td>
+			<td>There are a number of branching commands. Let's go through them one at a time.</td>
+			<td></td>
+			<td></td>
+			<td></td>		
+		</tr>
+
+		<tr>
+			<td>BCC</td>
+			<td>Branch Carry Clear. Jump to address specified if the carry flag is not set.</td>
+			<td>
+	<pre><code>
+	lda #$FE
+	clc ; clear carry flag
+	adc #1 ; $FE + 1 = $FF, does not set carry flag
+	bcc skip ; jump to 'skip', because carry flag is clear
+noskip:
+	adc #1 ; will not occur, as carry flag is not set!
+skip:
+	sta $00 ; stores accumulator, $FE, into address $00
+	</code></pre>
+			</td>
+			<td>Any addition that results in less than 256 will not set the carry.</td>
+			<td></td>
+		</tr>
+
+		<tr>
+			<td>BCS</td>
+			<td>Branch Carry Set. Jump to the specified section of code if the carry flag is not set.
+			</td>
+			<td>
+	<pre><code>
+	lda #$FF
+	clc ; clear carry flag
+	adc #1 ; $FF + 1 = $00 (zero), sets the carry flag
+	bcc carryClear
+	bcs carrySet
+carryClear:
+	adc #1 ; code will be skipped as carry is set!
+	jmp moreCode
+carrySet:
+	sta $00 ; This code will execute
+moreCode:
+	(other code here...)
+	</code></pre>
+			</td>
+			<td>All of the branch commands have a complement or "opposite", BCS being the complement of 
+			BCC. If BCC wouldn't result in a branch, than BCS would, or vice versa.</td>
+			<td></td>		
+		</tr>
+
+		<tr>
+			<td>BEQ</td>
+			<td>Branch Equal. Jumps to specified section of code if value in accumulator is equal to 
+			zero.</td>
+			<td>
+	<pre><code>
+	lda #1
+	beq isZero
+	lda #0
+	beq isZero
+notZero:
+	lda #2	; This will be skipped
+isZero:
+	(more code)... ; This will be executed
+	</code></pre>
+			</td>	
+				<td>Complement of BNE.</td>
+				<td></td>		
+		</tr>
+
+		<tr>
+			<td>BNE</td>
+			<td>Branch Not Equal. Jump to specified section of code if accumulator value is 
+			<em>not</em> equal to zero.</td>
+			<td>
+	<pre><code>
+	lda #1
+	bne notZero
+	lda #0	; This will be skipped, jump already occurred
+	beq isZero ; This will also be skipped
+notZero:
+	lda #2	;
+	jmp otherCode 
+isZero:
+	(more code)... ; This will be skipped
+otherCode:
+	(even more code)... ; Code continues here
+	</code></pre></td>
+			<td>Complement of BEQ.</td>
+			<td></td>		
+		</tr>
+		
+		<tr>
+			<td>BMI</td>
+			<td>Branch Minus (branch if negative). Jump to specified section of code if accumulator is 
+			negative.</td>
+			<td>
+	<pre><code>
+	lda #127 ; 0 to 127 is "positive" in 6502
+	clc
+	adc #1 ; now 128 = -127 in 6502, see notes
+	bmi itsNegative
+	bpl itsPositive
+itsNegative:
+	(other code...) ; Code will branch here
+	jmp moreCode
+itsPositive
+	(other code...) ; Code will not execute
+moreCode:
+	(even more code...)
+	</code></pre>
+			</td>
+			<td>The 6502 allows for the use of negative numbers by making 255 (or $FF) = 
+			-1, 254 = -2, ..., etc.,, 128 = -127. A full explanation can be found here: 
+			<a href="coding.html#negative">Negative Numbers on the 6502</a></td>
+			<td></td>
+		</tr>
+		
+		<tr>
+			<td>BPL</td>
+			<td>Branch Plus (branch if positive). Jump to specified section of code if accumulator is 
+			positive.</td>
+			<td>
+	<pre><code>
+	lda #255 ; 255 = -1 in 6502 (see notes for BMI)
+	clc
+	adc #1 ; Accumulator is 0, counts as positive
+	bmi itsNegative
+	bpl itsPositive
+itsNegative:
+	(other code...) ; Code will not execute
+	jmp moreCode
+itsPositive
+	(other code...) ; Code will branch here
+moreCode:
+	(even more code...)
+	</code></pre>
+		</td>	
+			<td>Complement of BMI. Any number from 0 to 127 will branch with BPL.</td>
+			<td></td>		
+		</tr>
+		
+		<tr>
+			<td>BVC</td>
+			<td>Branch if Overflow Clear. Jump to specified section of code if overflow flag is 
+			<em>not</em> set. (Overflow flag sets when sign changes on the number, I.e. adding 1 to 127, 
+			since 128 also equals -127.)</td>
+			<td>
+	<pre><code>
+	lda #126 ; Load decimal 126 into accumulator
+	clc	 ; clear the carry
+	adc #1   ; add 1 to 126, gives 127 (still positive)
+	bvc stillPositive ; 127 is positive, so branch occurs
+notPositive:
+	(some code...) ; Code will not execute
+stillPositive:
+	(some other code...) ; code continues from here
+	</code></pre>
+			</td>	
+			<td>Complement of BVS.</td>
+			<td></td>		
+		</tr>
+		
+		<tr>
+			<td>BVS</td>
+			<td>Branch if Overflow Set. Jump to specified section of code if overflow flag is set.</td>
+			<td>
+	<pre><code>
+	lda #127 ; Load decimal 126 into accumulator
+	clc	 ; clear the carry
+	adc #1   ; 127 + 1 = 128 (= -127, sets overflow)
+	bvs notPositive ; 128 is "negative", so branch occurs
+stillPositive:
+	(some other code...) ; Code will not execute
+notPositive:
+	(some code...) ; Code continues from here
+	</code></pre>
+			</td>	
+			<td>Complement of BVC</td>
+			<td></td>		
+		</tr>
+		
+		<tr>
+			<td>BIT</td>
+			<td>Essentially AND command, but it doesn't change the accumulator value, it just sets the 
+			flags (if appropriate).</td>
+			<td>
+	<pre><code>
+	lda %10111000 ; Load binary 10111000 = 184 = -72
+	bit %00000000 ; Sets Z,V flags
+	</code></pre>
+			</td>	
+			<td>Useful when you want to use something similar to AND, but without changing the value in 
+			the accumulator.</td>
+			<td>N,Z,V</td>		
+		</tr>
+		
+		<tr>
+			<td>BRK</td>
+			<td>Stop the CPU, execute an interrupt. Address called at $FFFE/FF is called as a subroutine 
+			(which is your "irq" code).</td>
+			<td>
+	<pre><code>
+	(some code...)
+	brk ; Call "irq" subroutine
+	lda #55 ; Will not execute, brk occurred
+	</code></pre>
+			</td>
+			<td>If you don't have any code in your irq subroutine, the game basically freezes and 
+			nothing further occurs.</td>
+			<td></td>
+		</tr>
+		
+		<tr>
+			<td>CLC</td>
+			<td>Clear the carry flag.</td>
+			<td>
+	<pre><code>
+	clc
+	</code></pre>
+			</td>
+			<td> Use this with ADC when adding, unless you specifically want to add carry as well 
+			(assuming it is set).</td>
+			<td>C</td>
+		</tr>
+		
+		<tr>
+			<td>CLD</td>
+			<td>Clear Decimal, makes it so that you're not in Binary Decimal Mode</td>
+			<td>
+	<pre><code>
+	cld
+	</code></pre>
+			</td>
+			<td>
+			Binary Decimal Mode doesn't actually exist for NES, but it's good practice to put this 
+			command in the initialization/reset of your program, because the behaviour of the D flag is 
+			not quite clear when the NES is either turned on or reset. <span class="important">Always 
+			include this in the initialization of your program!</span></td>
+			<td>D</td>
+		</tr>
+		
+		<tr>
+			<td>CLI</td>
+			<td>Clear Interrupt Flag (allows for interrupts). Use this to turn interrupts back on.</td>
+			<td>
+	<pre><code>
+	cli ; Interrupts enabled (disabled using SEI)
+	</code></pre>
+			</td>
+			<td>Use this if you disabled interrupts using SEI and you want hardware interrupts turned 
+			back on.</td>
+			<td>I</td>
+		</tr>
+		
+		<tr>
+			<td>CLV</td>
+			<td>Clear Overflow Flag.</td>
+			<td>
+	<pre><code>
+	clv
+	</code></pre>
+			</td>
+			<td>Overflow flag gets set every time a number changes from positive to negative or vice 
+			versa.</td>
+			<td>V</td>
+		</tr>
+		
+		<tr>
+			<td>CMP</td>
+			<td>Compares value to accumulator, can be used to set negative, carry, or zero flags.</td>
+			<td>
+	<pre><code>
+	lda #20
+	cmp #21 ; Sets N flag (20 - 21 = -1)
+	lda #21
+	cmp #21 ; Sets Z flag (21 - 21 = 0)
+	</code></pre>
+			</td>
+			<td>Think of this command like subtracting from the accumulator (without actually changing 
+			value inside of accumulator) and seeing what flags that would set.</td>
+			<td>N,Z,C</td>
+		</tr>
+		
+		<tr>
+			<td>CPX</td>
+			<td>Similar to CMP but compares against value in X register.</td>
+			<td>
+	<pre><code>
+	ldx #20
+	cpx #21 ; Sets N flag (20 - 21 = -1)
+	ldx #21
+	cpx #21 ; Sets Z flag (21 - 21 = 0)
+	</code></pre>
+			</td>
+			<td>(See notes in CMP above.)</td>
+			<td>N,Z,C</td>
+		</tr>
+		
+		<tr>
+			<td>CPY</td>
+			<td>Similar to CMP/CPX but compares against value in Y register.</td>
+			<td>
+	<pre><code>
+	ldy #20
+	cpy #21 ; Sets N flag (20 - 21 = -1)
+	ldy #21
+	cpy #21 ; Sets Z flag (21 - 21 = 0)
+	</code></pre>
+			</td>
+			<td>(See notes in CMP above.)</td>
+			<td>N,Z,C</td>
+		</tr>
+		
+		<tr>
+			<td>DEC</td>
+			<td>Decreases chosen value by 1.</td>
+			<td>
+	<pre><code>
+	DEC $FF ; Decrease address $FF value by one
+	</code></pre>
+			</td>
+			<td>You will probably use dex and dey more often (for loops), but this has a similar 
+			effect.</td>
+			<td>N,Z</td>
+		</tr>
+		
+		<tr>
+			<td>DEX</td>
+			<td>Decrease value stored in x register by 1.</td>
+			<td>
+	<pre><code>
+	ldx #12		; Load 12 into x register
+a_loop:
+	txa 		; transfer value from x to a
+	clc
+	adc #1 		; add 1
+	tay		; transfer accumulator value to y
+	dex 		; Value in x register is now 11
+	bne a_loop	; loop until x = 0
+	</code></pre>
+			</td>
+			<td>
+	Particularly useful for loops when used with branch commands.
+			</td>
+
+			<td>N,Z</td>
+		</tr>
+		
+		<tr>
+			<td>DEY</td>
+			<td>Decrease value stored in y register by 1.</td>
+			<td>
+	<pre><code>
+	ldy #10		; Load 10 into y register
+a_loop:
+	lda $02,y	; load zero page address $02 + y
+	clc
+	adc #5 		; add 5
+	sta $02,y	; value in $02 + y now 5 more
+	dey 		; decrease y-value
+	bne a_loop	; loop until y equals zero
+	</code></pre>
+			</td>
+			<td> Useful in loops, can use with x register to create nested loops (which can be useful 
+			for things like setting up your tile graphics).</td>
+
+			<td>N,Z</td>
+		</tr>
+		
+		<tr>
+			<td>EOR</td>
+			<td>Exclusive-OR command (often XOR in other languages/systems). Checks each bit in 
+			accumulator and value to see if exactly one of them is one.</td>
+			<td>
+	<pre><code>
+	lda %10110010
+	eor %00001111 ; accumulator value now %10111101
+	lda %11110000
+	eor %00001111 ; accumulator value now %11111111
+	lda %11110000
+	eor %00000000 ; accumulator is unchanged
+	</code></pre>
+			</td>
+			<td>
+			Every value of 1 in the eor command essentially flips the bits in the accumulator 
+			from 1 to 0 or vice versa.
+			</td>
+			<td>N,Z</td>
+		</tr>
+		
+		<tr>
+			<td>INC</td>
+			<td>Increases selected value by 1.</td>
+			<td>
+	<pre><code>
+	inc $FA ; Increase value at address $FA by 1
+	</code></pre>
+			</td>
+			<td>Complement to DEC.</td>
+			<td>N,Z</td>
+		</tr>
+		
+		<tr>
+			<td>INX</td>
+			<td>Increases value in x register by 1.</td>
+			<td>
+	<pre><code>
+	ldx 12
+	inx ; Value in x register is now 13
+	</code></pre>
+			</td>
+			<td>
+	Useful for loops when used with branch commands.
+			</td>
+			<td>N,Z</td>
+		</tr>
+		
+		<tr>
+			<td>INY</td>
+			<td>Increases value in y register by 1.</td>
+			<td>
+	<pre><code>
+	ldy 13
+	iny ; Value in y register is now 14
+	</code></pre>
+			</td>
+			<td>
+	Useful for loops when used with branch commands.
+			</td>
+			<td>N,Z</td>
+		</tr>
+		
+		<tr>
+			<td>JMP</td>
+			<td>Jump to selected address.</td>
+			<td>
+	<pre><code>
+	jmp $3000 ; Jump to code at address $3000
+	</code></pre>
+			</td>
+			<td>Using "jmp *" will cause an endless loop by jumping to itself, which can be useful when 
+			you're just testing out a snippet of code.</td>
+			<td></td>
+		</tr>
+		
+		<tr>
+			<td>JSR</td>
+			<td>Jump to subroutine at selected address.</td>
+			<td>
+	<pre><code>
+	jsr funLoop ; jump to label "funLoop"
+	lda #5 ; runs after "funloop"
+	jmp otherCode ; jumpt to "otherCode"
+funLoop:
+	lda #6 ; 6 is loaded into accumulator
+	rts ; Returns to command lda #5 above
+otherCode:
+	(more code here...)
+	</code></pre>
+			</td>
+			<td>
+			Unlike jmp, can be paired with rts which allows you to resume running lines of code from 
+			right after the jsr
+			</td>
+			<td></td>
+		</tr>
+
+		<tr>
+			<td>LDA</td>
+			<td>Loads selected value into accumulator.</td>
+			<td>
+	<pre><code>
+	lda #55 ; a = 55 (decimal)
+	lda #$55 ; a = 55 (hexidecimal)
+	lda #%10101010 ; a = 10101010 (binary)
+	lda $55 ; a = value stored at zero-page address $55
+	</code></pre>
+			</td>
+			<td>This will probably be the command you use the most!</td>
+			<td>N,Z</td>
+		</tr>
+		
+		<tr>
+			<td>LDX</td>
+			<td>Loads selected value into x register.</td>
+			<td>
+	<pre><code>
+	ldx #32 ; x = 32 (decimal)
+	ldx $32 ; x = value stored at zero-page address $32
+	ldx #%10001111 ; x = 10001111 (binary)
+	</code></pre>
+			</td>
+			<td>Often used with LDA when you need more than one variable at a time.</td>
+			<td>N,Z</td>
+		</tr>
+		
+		<tr>
+			<td>LDY</td>
+			<td>Loads selected value into y register.</td>
+			<td>
+	<pre><code>
+	ldy #35 ; y = 35 (decimal)
+	ldy $35 ; y = value stored at zero-page address $35
+	ldy #%10001110 ; y = 10001110 (binary)
+	</code></pre>
+			</td>
+			<td>LDY is particularly useful when combined with LDX when you have a loop inside of a 
+			loop.</td>
+			<td>N,Z</td>
+		</tr>
+		
+		<tr>
+			<td>LSR</td>
+			<td>Shift bits of selected value to the right. Bit 0 becomes the new carry.</td>
+			<td>
+	<pre><code>
+	lda %10101010
+	sta $FE ; Store %10101010 into zero-page address $FE
+	lsr $FE ; Value at address $FE is now %01010101
+	</code></pre>
+			</td>
+			<td>Can shift bits in accumulator by just typing LSR (i.e. with no address or value beside 
+			it).</td>
+			<td>N,Z,C</td>
+		</tr>
+		
+		<tr>
+			<td>NOP</td>
+			<td>No operation.</td>
+			<td>
+	<pre><code>
+	nop
+	</code></pre>
+			</td>
+			<td>
+			NOP is a 1-byte operation that essentially does nothing. It could be used as a delay, though
+			it is not recommended (there are better ways of keeping track of time, like the use of 
+			vblank). Can also be used as part of self-modifying code.
+			</td>
+			<td></td>
+		</tr>
+		
+		<tr>
+			<td>ORA</td>
+			<td>OR command. Checks to see if either accumulator or selected value has a 1 at each digit.
+			</td>
+			<td>
+	<pre><code>
+	lda %10101010
+	ora %01010101 ; Value in accumulator is now %11111111
+	</code></pre>
+			</td>
+			<td>Great for turning certain bits "on" (into a 1) while making sure other bits are 
+			unaffected.</td>
+			<td>N,Z,C,V</td>
+		</tr>
+		
+		<tr>
+			<td>PHA</td>
+			<td>Pushes value from accumulator onto the stack.</td>
+			<td>
+	<pre><code>
+	lda #11
+	pha ; 11 is on top of the stack
+		lda #12
+		sta $FE ; Store 12 in zero-page address $FE
+	pla ; 11 is returned from stack to accumulator
+	</code></pre>
+			</td>
+			<td>
+			Value in accumulator remains after PHA, until you load a new value. Useful for times when an 
+			operation using, say, the accumulator might be interrupted by a subroutine that also 
+			requires the accumulator, and value needs to be "remembered" for later use.</td>
+			<td></td>
+		</tr>
+		
+		<tr>
+			<td>PHP</td>
+			<td>Push the flags onto the stack.</td>
+			<td>
+	<pre><code>
+	lda #5
+	sec
+	sbc #5 		; This would set the zero flag
+	php 		; Push flag values onto the stack.
+		lda #5 	; Zero flag no longer set
+	plp 		; Zero flag is set again
+	</code></pre>
+			</td>
+			<td>
+			Similar to PHA, this allows you to store the flag settings when you know that another 
+			operation might occur that needs to use the flags, but you still need to "remember" the 
+			flags from your first operation. Note: PHP is like LDA, LDX, etc., in that it doesn't "erase" 
+			the values in your flags, it just puts a "copy" of them on the stack for future use.
+			</td>
+			<td></td>
+		</tr>
+
+		<tr>
+			<td>PLA</td>
+			<td>Complemntary command to PHA, pulls the "top" byte off the stack and puts it in the 
+			accumulator.</td>
+			<td>
+	<pre><code>
+	lda #5
+	pha 		; accumulator pushed to stack
+		lda #3
+		sta $01	; store 3 in zero page address $01 
+	pla ; accumulator value is now 5 again
+	</code></pre>
+			</td>
+			<td>Generally always follows shortly after a pha command, so that your stack doesn't have 
+			data on it that goes unused.</td>
+			<td></td>
+		</tr>
+
+		<tr>
+			<td>PLP</td>
+			<td>Complement to PHP, pulls the "top" byte off the stack and stores it as the flag values.
+			</td>
+			<td>
+	<pre><code>
+	lda #5
+	sec
+	sbc #5 		; This would set the zero flag
+	php 		; Push flag values onto the stack.
+		lda #5 	; Zero flag no longer set
+	plp 		; Zero flag is set again
+	</code></pre>
+			</td>
+			<td>Generally always follows shortly after a php command.</td>
+			<td>N,Z,C,I,D,V</td>
+		</tr>
+
+		<tr>
+			<td>ROL</td>
+			<td>Shift bits in selected value one bit to the left (bit from carry goes to bit 0 in 
+			selected value, and bit 7 from selected value goes to carry).</td>
+			<td>
+	<pre><code>
+	clc ; Clear the carry
+	lda %1111000
+	sta $FF ; address $FF has value %11110000
+	rol $FF ; value is now %11100000, carry flag set
+	</code></pre>
+			</td>
+			<td>As with LSR and ROR, can shift bits in accumulator by calling command without a value, 
+			e.g. ROL</td>
+			<td>N,Z,C</td>
+		</tr>
+
+		<tr>	
+			<td>ROR</td>
+			<td>Similar to ROL but bits shift to the right instead of the left.</td>
+			<td>
+	<pre><code>
+	clc ; Clear the carry
+	lda %00001111
+	sta $FF ; address $FF has value %00001111
+	ror $FF ; value is now %00000111, carry flag set
+	</code></pre>
+			</td>
+			<td>Similar usage to LSR and ROL.</td>
+			<td>N,Z,C</td>
+		</tr>
+
+		<tr>
+			<td>RTI</td>
+			<td>Return from interrupt.</td>
+			<td>
+	<pre><code>
+	rti
+	</code></pre>
+			</td>
+			<td>Similar to RTS but used at the end of an interrupt (e.g. NMI or IRQ).</td>
+			<td>N,Z,C,I,D,V</td>
+		</tr>
+
+		<tr>
+			<td>RTS</td>
+			<td>Return from subroutine.</td>
+			<td>
+	<pre><code>
+	lda #12 ; Value in accumulator is 12
+	jsr someSubroutine ; Go to someSubroutine
+	sta $FF ; Value stored at $FF is 11, not 12
+someSubroutine:
+	sta $FE ; Value in accumulator stored at $FE
+	lda #11 ; Value in accumulator is now 11
+	rts  ; Return from subroutine
+	</code></pre>
+			</td>
+			<td>Make sure to include this at the end of your subroutines to ensure your code flows in 
+			the right order!</td>
+			<td></td>
+		</tr>
+
+		<tr>
+			<td>SBC</td>
+				<td>Acts like normal subtraction if carry is set. See notes to the right.</td>
+			<td>
+	<pre><code>
+	sec ; Set carry
+	lda #1
+	sbc #1 ; Value in accumulator now 0
+	</code></pre>
+			</td>
+			<td>The SEC part is a bit tricky to understand when starting out, but it has to do with 
+			two's-complement notation, and how the 6502 stores negative numbers. See more info on 
+			negative numbers here:
+			<a href = "coding.html#negative">Negative numbers on the 6502</a>
+			</td>
+			<td>N,Z,C,V</td>
+		</tr>
+
+		<tr>
+			<td>SEC</td>
+			<td>Sets the carry.</td>
+			<td>
+	<pre><code>
+	(see code example for sbc above)
+	</code></pre>
+			</td>
+			<td>(See notes for SBC above.)</td>
+			<td>C</td>
+		</tr>
+
+		<tr>
+			<td>SED</td>
+			<td>Enables binary decimal mode, which doesn't work for the NES (so don't use this!)</td>
+			<td>
+	<pre><code>
+	(None. Don't use this command!)
+	</code></pre>
+			</td>
+			<td>
+			Some 6502 devices can make use of binary decimal mode, but the NES is not one of them, so you 
+			will never need this command. <span class="important">Don't use this command, ever!!!</span>
+			</td>
+			<td></td>
+		</tr>
+
+		<tr>
+			<td>SEI</td>
+			<td>Sets interrupt flag (most interrupts will no longer occur).</td>
+			<td>
+	<pre><code>
+	sei
+	</code>
+	</pre>
+			</td>
+			<td>
+			A great piece of code to put in your initialization/reset section of your code, if you want 
+			greater control over what happens with the NES hardware. As vblank is an NMI (non-maskable 
+			interrupt), this will not stop the screen from refreshing, so keep that in mind when using 
+			SEI.</td>
+			<td>I</td>
+		</tr>
+
+		<tr>
+			<td>STA</td>
+			<td>Stores the value in accumulator to selected address.</td>
+			<td>
+	<pre><code>
+	lda #11 ; Value of accumulator is set to 11
+	sta $2032 ; Stores value of 11 to address $2032
+	</code>
+	</pre>
+			</td>
+			<td>
+			Can reuse the "same" accumulator value over and over again (aka STA doesn't reset or 
+			eliminate value stored in accumulator).
+			</td>
+			<td></td>
+		</tr>	
+
+		<tr>
+			<td>STX</td>
+			<td>Similar to STA but for x register.</td>
+			<td>
+	<pre><code>
+	ldx #$FE ; Hex value $FE loaded into x register
+	stx $FD ; Value $FE stored at zero-page address $FD
+	</code>
+	</pre>
+			</td>
+			<td> Similar functionality to STA and STY.
+			</td>
+			<td></td>
+		</tr>
+
+		<tr>
+			<td>STY</td>
+			<td>Similar to STX but for y register.</td>
+			<td>
+	<pre><code>
+	ldy #$AA ; Hex value $AA stored in y register
+	sty $AB ; Value $AA store at zero-page register $AB
+	</code>
+	</pre>
+			</td>
+			<td>
+				Similar functionality to STA and STX.
+			</td>
+			<td></td>
+		</tr>
+
+		<tr>
+			<td>TAX</td>
+			<td>Transfer value from accumulator to x register.</td>
+			<td>
+	<pre><code>
+	lda $02	; Load value from zero page address $02
+	asl		; Multiply accumulator by 2
+	tax 	; Store value in x-register
+	</code>
+	</pre>
+			</td>
+			<td>Most common usage is when you need to modify an index using accumulator-based 
+			commands like ASL, ADC, etc.</td>
+			<td>N,Z</td>
+		</tr>
+
+		<tr>
+			<td>TAY</td>
+			<td>Transfer value from accumulator to y register.</td>
+			<td>
+	<pre><code>
+	lda #55
+	tay ; y = a = 55
+	</code>
+	</pre>
+			</td>
+			<td>Similar usage to TAX.</td>
+			<td>N,Z</td>
+		</tr>
+
+		<tr>
+			<td>TSX</td>
+			<td>Transfer value from "top" of stack to x register.</td>
+			<td>
+	<pre><code>
+	lda #55
+	pha ; Value from accumulator pushed to stack
+	tsx ; Value in x-register is now 55
+	</code>
+	</pre>
+	</td>
+			<td>Usually follows somewhere after a TXS.</td>
+			<td>N,Z</td>
+		</tr>
+
+		<tr>
+			<td>TXA</td>
+			<td>Transfer value from x register to accumulator.</td>
+			<td>
+	<pre><code>
+	ldx #65
+	txa ; x = a = 65
+	</code>
+	</pre>
+			</td>
+			<td>There is no direct way to transfer from x register to y register, but you can create a 
+			"TXY" of sorts by using TXA followed by TAY.</td>
+			<td>N,Z</td>
+		</tr>
+
+		<tr>
+			<td>TXS</td>
+			<td>Transfer value from x register to "top" of stack.</td>
+			<td>
+	<pre><code>
+	ldx #75
+	txs ; value on top of stack is now 75
+	pla ; sets a to 75 and "pulls" 75 off stack
+	</code>
+	</pre>
+			</td>
+			<td>In most cases, a TXS has a complementary TSX somewhere nearby in the code.</td>
+			<td></td>
+		</tr>
+
+		<tr>
+			<td>TYA</td>
+			<td>Transfer value from y register to accumulator.</td>
+			<td>
+	<pre><code>
+	ldy #$85 ; Load hex value 85 into y register
+	tya ; value in y and a now both hex 85 (= 133 decimal)
+	</code>
+	</pre>
+			</td>
+			<td>To make a transfer from y register to x register, simply use TYA followed by TAX.</td>
+			<td>N,Z</td>
+		</tr>
+	</table>
+</div><!-- Closing table -->
+
+	
+	<div class="footer">
+		<ul>
+			<li><a href="index.html">Home</a></li>
+			<li><a href="hardware.html">Hardware Basics</a></li>
+			<li><a href="coding.html">Coding Basics</a></li>
+			<li><a href="programs.html">Sample Programs</a></li>
+			<li><a href="commands.html">Command Table</a></li>
+			<li><a href="resources.html">Other Resources</a></li>
+				
+		</ul>
+		<p>
+			© 2023 Thomas Wesley Scott
+		</p>
+	</div><!-- Closing footer -->
+</body>
+<script src="darkmode.js"></script>
+<script>
+	cellContent = document.getElementsByTagName('td');
+	var tableColumns = 5;
+	var commandInfo = new Array(cellContent.length / tableColumns);
+	var compressedTable = false;
+	var isComboBox = false;
+	checkSize();
+	/* The function "checkSize" is a variation of code from codepen.io and stackoverflow.com
+	(full url details listed below with the function) */
+	window.addEventListener('resize', checkSize);
+
+
+/* This script is provided by http://www.javascriptfreecode.com coded by: Kerixa Inc. 
+It has been modified for use on my site, and was originally downloaded on May 22nd, 2023 */
+	function commandReveal() {
+		var messageIndex = document.getElementById('commandPick').selectedIndex;
+		var newBoxText = document.getElementById('messageBox');
+		newBoxText.value = commandInfo[messageIndex];
+		/* The following two lines of code based on an answer to a question found on StackOverflow here:
+		https://stackoverflow.com/questions/995168/textarea-to-resize-based-on-content-length 
+		downloaded for use on my site May 26th, 2023 */
+		newBoxText.style.height = "1px"; 
+		newBoxText.style.height = (newBoxText.scrollHeight) + "px";
+	}
+
+/* This function regarding clientWidth is a heavily modified version of code found at:
+https://codepen.io/jondlm/pen/AMrVYo, based on the second answer to a question asked at StackOverflow here:
+https://stackoverflow.com/questions/641857/javascript-window-resize-event
+and was downloaded for use on my site May 19th, 2023 */
+	function checkSize(){
+		width = document.documentElement.clientWidth;
+
+		for (var i = 0; i < cellContent.length; i++){
+	  		if (i % tableColumns == 2) {
+				cellContent[i].style.padding = "0";
+			}
+		}
+
+
+	  if (width >= 1300) {
+	  	if (compressedTable == true) {
+	  		//uncompress the table
+	  		tableList = document.getElementsByTagName('table');
+
+	  		for (var i = 0; i < tableList.length; i++){
+	  			tableList[i].style.display = "Block";
+	  	
+	  		}
+	  		for (var i = 0; i < cellContent.length; i++) {
+	  			cellContent[i].style.display = "table-cell";
+
+	  			// This code was developed through experimenting with the regex app/page RegExr at regexr.com
+	  			// on May 28, 2023
+	  			cellContent[i].innerHTML = cellContent[i].innerHTML.replace(/(<div class="compress">)[\s\S]*?<\/div>/gm,"");	  		
+
+	  		}
+	  		
+	  		compressedTable = false;
+			
+
+	  	}
+	  	if (isComboBox == true){
+	  		isComboBox = false;
+	  		comboBox.style.display = "None";
+	  		messageBox.style.display = "None";
+
+	  	}
+
+	  }
+
+	  
+	  if (width < 1300) { 
+	  	if ((isComboBox == true) && (width >= 1025)){
+	  		isComboBox = false;
+	  		comboBox.style.display = "None";
+	  		messageBox.style.display = "None";
+	  		tableList = document.getElementsByTagName('table');
+	  		for (var i = 0; i < tableList.length; i++){
+	  			tableList[i].style.display = "Block";
+	  	
+	  		}
+	  			
+
+	  		for(var i = 0; i < cellContent.length; i++){
+	  			if (!((i % tableColumns == 3) || (i % tableColumns == 4))) {
+	  				cellContent[i].style.display = "table-cell";
+
+	  			}
+	  			
+	  		}
+	  		
+	  	}
+	  	if (compressedTable == false) {
+	  		compressedTable = true;
+	  		for (var i = 0; i < cellContent.length; i++){
+			
+
+				if ((i % tableColumns == 2) && (i > tableColumns)) {
+				
+
+					if (cellContent[i+1].innerHTML != "") {
+						cellContent[i].innerHTML = cellContent[i].innerHTML.replace(/<\/pre>[\s\S\r\n]*/gm,'</pre>');
+
+						cellContent[i].innerHTML += '<div class="compress"><p>Notes: ';
+						cellContent[i].innerHTML +=  cellContent[i+1].innerHTML.replace(/[\t\r\n]*/g,'');
+						cellContent[i].innerHTML += '</p></div>\n';
+					}
+					//cellContent[i].innerHTML = cellContent[i].innerHTML.replace(/[\t\r\n]*/,'poo');
+					if (cellContent[i+2].innerHTML != "") cellContent[i].innerHTML += '<div class="compress"> <p>Flags affected: ' + cellContent[i+2].innerHTML + ' </p></div>';
+				
+				
+				} else if ((i % tableColumns == 3) || (i % tableColumns == 4)) {
+				
+				cellContent[i].style.display = "None";
+				}
+				console.log(cellContent[i].innerHTML);
+			}
+			alert(cellContent[7].innerHTML);
+	  	}
+	  	
+
+	  } 
+
+	  if ((width < 1025) && (isComboBox == false)){
+	  	
+	  	isComboBox = true;
+	  	
+	  	mainContent = document.getElementById("tableContent");
+	  	
+	  	if (document.getElementsByTagName('select').length == 0) {
+	  		comboBox = document.createElement("select");
+	  		comboBox.id = "commandPick";
+	  		messageBox = document.createElement("textarea");
+	  		messageBox.id = "messageBox";
+	  		mainContent.appendChild(comboBox);
+	  		mainContent.appendChild(messageBox);
+
+	  	}
+	  	else {
+	  		comboBox.style.display="Block";
+	  		messageBox.style.display="Block";
+	  	}
+	  	
+	  	comboBox.style.width = "100%";
+	  	comboBox.style.height = "40px";
+	  	tableList = document.getElementsByTagName('table');
+	  	for (var i = 0; i < tableList.length; i++){
+	  		tableList[i].style.display = "None";
+	  	
+	  	}
+	  			
+
+	  	for(var i = 0; i < cellContent.length; i++){
+	  		cellContent[i].style.display = "None";
+	  	}
+	
+	  	
+	  	
+	  	messageBox.style.backgroundColor = "white";
+	  	messageBox.style.borderRadius = "5px";
+	  	messageBox.style.width = "100%";
+	  	messageBox.readOnly = true;
+	  	
+
+	  	
+	  	arrayLength = (cellContent.length / tableColumns) - tableColumns;
+	  	commandInfo = new Array(arrayLength);
+
+	  	// This line of code is a modification of the answer to the following stackoverflow question:
+	  	// https://stackoverflow.com/questions/1628826/how-to-add-an-onchange-event-to-a-select-box-via-javascript	  	
+	  	comboBox.addEventListener('change', commandReveal); 
+
+
+ 	
+	  	
+	  	for (var i = 0; i < cellContent.length; i++){
+	  		if ((i % tableColumns == 0) && (i >= tableColumns)) {
+	  			option = document.createElement("option");
+	  			option.innerHTML = cellContent[i].innerHTML;
+	  			comboBox.appendChild(option);
+	  		} else if (((i % tableColumns == 1) || (i % tableColumns == 2)) && (i > tableColumns)) {
+	  			// how to get correct index for commandInfo?
+	  			// think involves modulo 5 ing it plus possible -5 or -i ing it??
+	  			// i = 0 is "Command", 1 = DESC, 2 = E.G., 3=NOTES,4="FLAGS"
+	  			// i = 5 is ADC, 6="compare etc", 7="lda etc", 8="great way etc",9="N,Z,C"
+	  			// so we want 6,7,8,9 in 1? NO, cause 8 and 9 already stored in 7, just 6 and 7
+	  			// so 6/7 into 1, 11/12 into 2, 16/17 into 3, etc.
+	  			// (i - (i % tableColumns)) / tableColumns is what we want
+	  			associatedIndex = ((i - (i % tableColumns)) / tableColumns) - 1;
+	  			if (commandInfo[associatedIndex] == null) commandInfo[associatedIndex] = cellContent[i].innerHTML;
+	  			else commandInfo[associatedIndex] += "\n" + cellContent[i].innerHTML;
+	  			
+	  			
+	  			// code from https://stackoverflow.com/questions/4898723/how-to-clear-tags-from-a-string-with-javascript
+	  			commandInfo[associatedIndex] = commandInfo[associatedIndex].replace(/<.*?>/g,'');
+	  			
+	  		}
+	  	}
+	  	messageBox.value = commandInfo[0];
+	  	commandReveal();
+ 	
+	  }
+}	
+	
+</script>
+</html>
