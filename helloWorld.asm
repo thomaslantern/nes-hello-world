@@ -3,7 +3,14 @@
 	; Code starts at $C000.
 	; org jump to $BFFO for header info
 
-	org $BFF0	
+	org $BFF0		; This command just tells
+				; compiler to start at $BFF0
+				; (where the header starts)
+
+	; This is a run of the mill NES cartridge header.
+	; Without this, your code won't work!
+	; For now, always include this header exactly like
+	; this.
 	db "NES",$1a		; Default NES header info
 	db $1			; Number of PRG-ROM pages
 	db $1			; Number of CHR-ROM pages
@@ -18,14 +25,23 @@
 nmihandler:
 	lda #$02 	; Transfer sprite data from
 	sta $4014	; from $0200 to DMA
-	rti
+	rti		; return from interrupt
 
+; The irqhandler is the code that runs every
+; time some NES hardware interrupts your code.
+; I've used the "sei" command to disable every
+; interrupt (except the screen/NMI above), so
+; this can just be left mostly blank.
 irqhandler:
 	rti
 
 
 ; startgame is code that runs everytime the game 
-; is turned on or reset.
+; is turned on or reset. We're basically starting
+; by "zeroing out" any data that lingered here
+; after a reset. This also gives us some time 
+; for the NES to load up properly before it 
+; can accept/use graphics.
 
 startgame:
 	sei			; Disable interrupts
