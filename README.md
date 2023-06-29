@@ -37,6 +37,6 @@ The general layout for NES code is as follows:
   <li>Footer</li>
   <li>Tile Data</li>
 </ol>
-
+(More info soon!)
 <h1>License</h1>
 Feel free to copy this code, modify it, and use it for either personal or commercial purposes. If you manage to sell a cartridge copy of "Hello, World!", let me know! I'd love to see it ;)
