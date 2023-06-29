@@ -24,7 +24,19 @@ For what should be a simple program, there sure is a lot of code!
 "Hello, World!" in Python is 1 line of code. 
 In C++, it's 4 or 5 lines. 
 In ASM 6502 (NES Aassembly Code)? Well... including spaces and comments we're clocking in at around 250 lines of code. Yikes! 
-But fear not! While there is much to learn, if you take it step by step, you'll see it's not so bad. I've taken great pains to comment just about every line of code in this sample program, so you should at least have an easier time figuring it out. 
+But fear not! While there is much to learn, if you take it step by step, you'll see it's not so bad. I've taken great pains to comment just about every line of code in this sample program, so you should at least have an easier time figuring it out. Let me give you some other tips, too, to make learning ASM6502 programming easier.
+
+<h2>General Layout of an NES Program</h2>
+The general layout for NES code is as follows:
+<ol>
+  <li>Header</li>
+  <li>Labels (e.g. someLabel equ $01)</li>
+  <li>NMI, IrqHandler, Program Reset/Initialization</li>
+  <li>Game Loop</li>
+  <li>Data/Lookup Tables</li>
+  <li>Footer</li>
+  <li>Tile Data</li>
+</ol>
 
 <h1>License</h1>
 Feel free to copy this code, modify it, and use it for either personal or commercial purposes. If you manage to sell a cartridge copy of "Hello, World!", let me know! I'd love to see it ;)
