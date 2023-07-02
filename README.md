@@ -37,6 +37,11 @@ The general layout for NES code is as follows:
   <li>Footer</li>
   <li>Tile Data</li>
 </ol>
-(More info soon!)
+
+These are all labeled pretty clearly in the program, and all are necessary for a functioning NES cartridge. The Header (the part with "db "NES",$1A", etc.) is included in every NES program, and while changes can be made to some parts of the header, in the beginning I would recommend leaving it as is. As with all parts of the code, you can learn the specifics of what each line does, and try modifying them later as you see fit.
+
+In this particular program there are no labels, so we move on to NMI, IrqHandler, and Program Reset/Initialization. They're all marked and explained fairly clearly in the program, so there shouldn't be too much confusion. Again, these are all essential parts of the program, and you must include them.
+(more to come!)
+
 <h1>License</h1>
 Feel free to copy this code, modify it, and use it for either personal or commercial purposes. If you manage to sell a cartridge copy of "Hello, World!", let me know! I'd love to see it ;)
