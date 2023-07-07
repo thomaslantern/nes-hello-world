@@ -38,9 +38,16 @@ The general layout for NES code is as follows:
   <li>Tile Data</li>
 </ol>
 
+<h2>The Header</h2>
 These are all labeled pretty clearly in the program, and all are necessary for a functioning NES cartridge. The Header (the part with "db "NES",$1A", etc.) is included in every NES program, and while changes can be made to some parts of the header, in the beginning I would recommend leaving it as is. As with all parts of the code, you can learn the specifics of what each line does, and try modifying them later as you see fit.
+<h2>Labels</h2>
+In this particular program there are no labels...
+<h2>NMI, IrqHandler, Program Reset/Initialization</h2>
+... so we move on to NMI, IrqHandler, and Program Reset/Initialization. They're all marked and explained fairly clearly in the program, so there shouldn't be too much confusion. Everything in the "NMI" section is what happens when the screen refreshes (which happens about 50 or 60 times a second, depending on whether you have an NTSC(60) or PAL(50) NES). 
 
-In this particular program there are no labels, so we move on to NMI, IrqHandler, and Program Reset/Initialization. They're all marked and explained fairly clearly in the program, so there shouldn't be too much confusion. Again, these are all essential parts of the program, and you must include them.
+The IrqHandler section is what happens during a system hardware interrupt, but we've disabled all of that (except for the screen refresh, which is a non-maskable interrupt, hence the name "NMI").
+
+Again, these are all essential parts of the program, and you must include them.
 (more to come!)
 
 <h1>License</h1>
