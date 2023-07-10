@@ -48,7 +48,11 @@ In this particular program there are no labels...
 The IrqHandler section is what happens during a system hardware interrupt, but we've disabled all of that (except for the screen refresh, which is a non-maskable interrupt, hence the name "NMI").
 
 Again, these are all essential parts of the program, and you must include them.
-(more to come!)
+
+<h2> The Game Loop </h2>
+This is an interesting part of the game's program. The game loop is necessary because, if there were no loop, the game code would run once and be done! (Which probably wouldn't make for a very fun game, in most cases.) So the question is, what code do we find here? In the case of this particular program, there's basically nothing but the loop itself? Why, you might ask? It's a simple enough program that only needs the loop to keep the game from ending/crashing.
+
+You can find some interesting discussions on NESDev forums about whether to include any other code in this part of your program, and what kind of code. (LINK SOON, and more info soon!)
 
 <h1>License</h1>
 Feel free to copy this code, modify it, and use it for either personal or commercial purposes. If you manage to sell a cartridge copy of "Hello, World!", let me know! I'd love to see it ;)
