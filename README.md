@@ -57,7 +57,6 @@ This is where we store data for things like the order of background tiles, or th
 https://www.nesdev.org/wiki/The_frame_and_NMIs and
 https://www.nesdev.org/wiki/NMI_thread ).
 
-You can find some interesting discussions on NESDev forums about whether to include any other code in this part of your program, and what kind of code. (LINK SOON, and more info soon!)
 
 <h1>License</h1>
 Feel free to copy this code, modify it, and use it for either personal or commercial purposes. If you manage to sell a cartridge copy of "Hello, World!", let me know! I'd love to see it ;)
