@@ -58,9 +58,16 @@ https://www.nesdev.org/wiki/The_frame_and_NMIs and
 https://www.nesdev.org/wiki/NMI_thread ).
 
 <h2>Footer</h2>
-This is another one of those sections where the code is simply necessary, and you probably shouldn't change it. Here we choose our names for our NMI (non-maskable interrupt AKA the screen refresh), our reset (the code that runs on loading/resetting the game), and our IRQ (other interrupts). Make sure you give names to all of these sections, and that you actually have code in all of these sections (you'll note my "irqhandler" - the section for my irq - has only an "rti" command, which is all you really need if you disable interrupts.. in fact, you may not even need that! [I've never tested it without]).
+This is another one of those sections where the code is simply necessary, and you probably shouldn't change it. Here we choose our names for:
+<ul>
+<li>our NMI (non-maskable interrupt AKA the screen refresh),</li>
+<li>our reset (the code that runs on loading/resetting the game),</li>
+<li>and our IRQ (other interrupts)</li>  
+</ul>
+Make sure you give names to all of these sections, and that you actually have code in all of these sections (you'll note my "irqhandler" - the section for my irq - has only an "rti" command, which is all you really need if you disable interrupts.. in fact, you may not even need that... I've never tested it without!)
 
-(more to come!)
+<h2>Tile Data</h2>
+Here is where we have our tile data (obviously). We have two bitplanes for each tile... which I will describe in more detail soon!
 
 <h1>License</h1>
 Feel free to copy this code, modify it, and use it for either personal or commercial purposes. If you manage to sell a cartridge copy of "Hello, World!", let me know! I'd love to see it ;)
