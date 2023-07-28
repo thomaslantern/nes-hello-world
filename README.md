@@ -67,7 +67,9 @@ This is another one of those sections where the code is simply necessary, and yo
 Make sure you give names to all of these sections, and that you actually have code in all of these sections (you'll note my "irqhandler" - the section for my irq - has only an "rti" command, which is all you really need if you disable interrupts.. in fact, you may not even need that... I've never tested it without!)
 
 <h2>Tile Data</h2>
-Here is where we have our tile data (obviously). We have two bitplanes for each tile... which I will describe in more detail soon!
+Here is where we have our tile data (obviously). We have two bitplanes for each tile (basically two 8x8 grids of 0s and 1s aka binary)... which describe what colour to use for each tile. Any tile can have up to 3 colours, 4 if you include the background. A zero in both grids means it's colour 0 (background), a 1 in bitplane 1 gives us colour 1, a 1 in bitplane 2 gives us colour 2, and a 1 in both gives us colour 3. (Also if you look really closely at my code, you should be able to make out the simpler tiles, such as the letters and numbers.)
+
+An excellent (but not too difficult) exercise would be to change the tiles from "Hello World!" to something different, like "Hello [your name here]!" Can you see how you might do this?
 
 <h1>License</h1>
 Feel free to copy this code, modify it, and use it for either personal or commercial purposes. If you manage to sell a cartridge copy of "Hello, World!", let me know! I'd love to see it ;)
