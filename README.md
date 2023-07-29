@@ -67,7 +67,14 @@ This is another one of those sections where the code is simply necessary, and yo
 Make sure you give names to all of these sections, and that you actually have code in all of these sections (you'll note my "irqhandler" - the section for my irq - has only an "rti" command, which is all you really need if you disable interrupts.. in fact, you may not even need that... I've never tested it without!)
 
 <h2>Tile Data</h2>
-Here is where we have our tile data (obviously). We have two bitplanes for each tile (basically two 8x8 grids of 0s and 1s aka binary)... which describe what colour to use for each tile. Any tile can have up to 3 colours, 4 if you include the background. A zero in both grids means it's colour 0 (background), a 1 in bitplane 1 gives us colour 1, a 1 in bitplane 2 gives us colour 2, and a 1 in both gives us colour 3. (Also if you look really closely at my code, you should be able to make out the simpler tiles, such as the letters and numbers.)
+Here is where we have our tile data (obviously). We have two bitplanes for each tile (basically two 8x8 grids of 0s and 1s AKA binary)... which describe what colour to use for each tile. Any tile can have up to 3 colours (4 if you include the background). Here's how the colour number is determined:
+<ul>
+<li>A zero in both grids means it's colour 0 (background)</li>
+<li>A 1 in bitplane 1 (and zero in bitplane2) gives us colour 1</li>
+<li>A 1 in bitplane 2 gives us colour 2</li>
+<li>A 1 in both bitplanes gives us colour 3</li>
+</ul>   
+(Also if you look really closely at my code, you should be able to make out the simpler tiles, such as the letters and numbers.)
 
 An excellent (but not too difficult) exercise would be to change the tiles from "Hello World!" to something different, like "Hello [your name here]!" Can you see how you might do this?
 
