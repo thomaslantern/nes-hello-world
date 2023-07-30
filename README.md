@@ -5,7 +5,7 @@
 Have you ever wanted to code for the NES, but you didn't know how? Do you want 8-bit programming knowledge, but instead you're stuck with 16 bits of fear? (That's trying to be a joke.) Want to write the next Super Mario Bros.? Your journey begins here! This is my version of "Hello, World" for the NES, and I offer the code to you as an opportunity to begin learning to program for the NES/ASM 6502.
 
 <h2>ASM 6502? What's that?</h2>
-ASM 6502 is the aseembly language used to program on the NES. If you've never programmed in an assembly language before, it can be a bit difficult at first, but with a bit of time and patience you can learn it, just like any other language.
+ASM 6502 is the assembly language used to program on the NES. If you've never programmed in an assembly language before, it can be a bit difficult at first, but with a bit of time and patience you can learn it, just like any other language.
 
 I've added a lot of comments to the code (most of the code is commented), so this should help you as far as understanding what's going on with each line of the program, but you will probably need to reference the commands for ASM 6502. My recommendation at this point would be to use ChibiAkumas' great "cheat sheet", which is downloadable for free here: https://www.chibiakumas.com/book/CheatSheetCollection.pdf (I also recommend his book on learning ASM6502, and suggest you use it to learn the commands while you're away from the computer!)
 
