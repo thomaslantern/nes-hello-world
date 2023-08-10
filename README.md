@@ -82,7 +82,15 @@ An excellent (but not too difficult) exercise would be to change the tiles from 
 
 <h2>Next Steps</h2>
 
-Congratulations! If you've read this far, I'm hoping it's because you've succeeded in compiling this code, maybe even editing it to suit your own purposes. (MORE TO COME!)
+Congratulations! If you've read this far, I'm hoping it's because you've succeeded in compiling this code, maybe even editing it to suit your own purposes. If there's still any confusion left, that's completely normal! I learn new things about ASM 6502 everyday, and with time your confidence with the language will grow as mine has. There's always more to learn!
+
+If you feel you've really absorbed what you can from this program, or you're hungry for something new, you could check out some of my other NES programs:
+<ul>
+  <li>https://github.com/thomaslantern/nes-basic-graphics</li>
+  <li>https://github.com/thomaslantern/nes-basic-sound</li>
+  <li>https://github.com/thomaslantern/nes-basic-controls</li>
+  <li>https://github.com/thomaslantern/nes-birthday-blast</li>
+</ul>
 
 <h1>License</h1>
 Feel free to copy this code, modify it, and use it for either personal or commercial purposes. If you manage to sell a cartridge copy of "Hello, World!", let me know! I'd love to see it ;)
