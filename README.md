@@ -48,7 +48,10 @@ These are all labeled pretty clearly in the program, and all are necessary for a
 In this particular program there are no labels... but if there were, they'd look something like this:<pre>
   <code>playerHealth equ $27  ; playerHealth can be used instead of writing $27</code>
 </pre>
-This can be handy when you plan on always storing the same information at the same address, because it's a lot easier to remember <i>playerHealth</i> than $27! Labels are a lot like variables, so you can think of them like that if you'd like, just keep in mind the following things: (MORE TO COME!)
+This can be handy when you plan on always storing the same information at the same address, because it's a lot easier to remember <i>playerHealth</i> than $27! Labels are a lot like variables, so you can think of them like that if you'd like, just keep in mind the following things: 
+<ol>
+  <li>1) #playerHealth gives you the number $27, but playerHealth gives you the value stored at $27. I often mix the two up... in fact, I'm tempted to go double-check right now, just to make sure I got it right... yep, we're good. (*Phew*) </li>
+</ol>(MORE TO COME!)
 <h2>NMI, IrqHandler, Program Reset/Initialization</h2>
 ... so we move on to NMI, IrqHandler, and Program Reset/Initialization. They're all marked and explained fairly clearly in the program, so there shouldn't be too much confusion. Everything in the "NMI" section is what happens when the screen refreshes (which happens about 50 or 60 times a second, depending on whether you have an NTSC(60) or PAL(50) NES). 
 
