@@ -7,7 +7,7 @@ Have you ever wanted to code for the NES, but you didn't know how? Do you want 8
 <h2>ASM 6502? What's that?</h2>
 ASM 6502 is the assembly language used to program on the NES. If you've never programmed in an assembly language before, it can be a bit difficult at first, but with a bit of time and patience you can learn it, just like any other language.
 
-I've added a lot of comments to the code (most of the code is commented), so this should help you as far as understanding what's going on with each line of the program, but you will probably need to reference the commands for ASM 6502. My recommendation at this point would be to use ChibiAkumas' great "cheat sheet", which is downloadable for free here: https://www.chibiakumas.com/book/CheatSheetCollection.pdf (I also recommend his book on learning ASM6502, and suggest you use it to learn the commands while you're away from the computer... you can find it here:
+I've added a lot of comments to the code (most of the code is commented), so this should help you as far as understanding what's going on with each line of the program, but you will of course need to learn the ASM6502 language. To do that, you'll need some kind of reference. My recommendation at this point would be to use ChibiAkumas' great "cheat sheet", which is downloadable for free here: https://www.chibiakumas.com/book/CheatSheetCollection.pdf (I also recommend his book on learning ASM6502, and suggest you use it to learn the commands while you're away from the computer... you can find it here:
 https://www.amazon.ca/gp/product/B0BKMS6752
 It's a great book for study time away from the computer, too!)
 
