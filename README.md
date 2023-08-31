@@ -21,12 +21,11 @@ A lot of NES programmers use a different compiler than VASM, ca65 (which is a co
 
 
 <h1>How to Run "helloworld.nes"</h1>
-Assuming you've successfully followed the steps to compile above, you should now have an .nes file, "helloworld.nes". This file can be run in any NES (Nintendo Entertainment System) emulator. I tend to use Nestopia, but other NES developers really seem to enjoy FCEUX, so use whichever emulator you like to run it!
+Assuming you've successfully followed the steps to compile above, you should now have an .nes file, "helloworld.nes". This file can be run in any NES (Nintendo Entertainment System) emulator. I tend to use Nestopia, but other NES developers really seem to enjoy FCEUX, so use whichever emulator you'd like!
 
 <h1>How to Use (and Learn From) "helloworld.asm"</h1>
-For what should be a simple program, there sure is a lot of code! 
-"Hello, World!" in Python is 1 line of code. 
-In C++, it's 4 or 5 lines. 
+"Hello, World!" in Python is 1 line of code. <br/>
+In C++, it's 4 or 5 lines. <br/>
 In ASM 6502 (NES Aassembly Code)? Well... including spaces and comments we're clocking in at around 250 lines of code. Yikes! 
 But fear not! While there is much to learn, if you take it step by step, you'll see it's not so bad. I've taken great pains to comment just about every line of code in this sample program, so you should at least have an easier time figuring it out. Let me give you some other tips, too, to make learning ASM6502 programming easier.
 
@@ -41,6 +40,8 @@ The general layout for NES code is as follows:
   <li>Footer</li>
   <li>Tile Data</li>
 </ol>
+
+Let's go over these sections in more detail.
 
 <h2>The Header</h2>
 These are all labeled pretty clearly in the program, and all are necessary for a functioning NES cartridge. The Header (the part with "db "NES",$1A", etc.) is included in every NES program, and while changes can be made to some parts of the header, in the beginning I would recommend leaving it as is. As with all parts of the code, you can learn the specifics of what each line does, and try modifying them later as you see fit.
