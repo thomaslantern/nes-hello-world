@@ -57,7 +57,7 @@ This can be handy when you plan on always storing the same information at the sa
 <h2>NMI, IrqHandler, Program Reset/Initialization</h2>
 ... so we move on to NMI, IrqHandler, and Program Reset/Initialization. They're all marked and explained fairly clearly in the program, so there shouldn't be too much confusion. Everything in the "NMI" section is what happens when the screen refreshes (which happens about 50 or 60 times a second, depending on whether you have an NTSC(60) or PAL(50) NES). 
 
-The IrqHandler section is what happens during a system hardware interrupt, but we've disabled all of that (except for the screen refresh, which is a non-maskable interrupt, hence the name "NMI").
+The IrqHandler section is what happens during a system hardware interrupt, but we've disabled all of that (except for the screen refresh, AKA the NMI - the <strong>Non-Maskable Interrupt</strong>).
 
 Again, these are all essential parts of the program, and you must include them.
 
