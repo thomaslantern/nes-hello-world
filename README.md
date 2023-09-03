@@ -26,7 +26,8 @@ Assuming you've successfully followed the steps to compile above, you should now
 <h1>How to Use (and Learn From) "helloworld.asm"</h1>
 "Hello, World!" in Python is 1 line of code. <br/>
 In C++, it's 4 or 5 lines. <br/>
-In ASM 6502 (NES Aassembly Code)? Well... including spaces and comments we're clocking in at around 250 lines of code. Yikes! 
+In ASM 6502? <br/>
+Well... including spaces and comments we're clocking in at around 250 lines of code. Yikes! 
 But fear not! While there is much to learn, if you take it step by step, you'll see it's not so bad. I've taken great pains to comment just about every line of code in this sample program, so you should at least have an easier time figuring it out. Let me give you some other tips, too, to make learning ASM6502 programming easier.
 
 <h2>General Layout of an NES Program</h2>
