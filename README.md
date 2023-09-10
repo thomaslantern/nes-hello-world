@@ -70,8 +70,7 @@ https://www.nesdev.org/wiki/The_frame_and_NMIs
 
 <h2>Data, Lookup Tables, and Functions</h2>
 This is where we store data for things like the order of background tiles, or the placement of sprites (NOTE: not the tile "blueprints" i.e. the design for the tiles, that comes later!), or any useful information that we might to look up (hence the name "look up table" or LAT). You'll see here I've put my data for the sprites for hello world, here. In fact, each group of 4 pairs of hexidecimal numbers gives (in this order): the y-coordinate, the tile-number, special attributes (none in this case), and the x-coordinates of each tile. I think I've marked it clearly enough in the program, but this can be a fun part of the program to modify if you're just looking to get your feet wet, so to speak. Modify the first number in any row, and you'll find the letters are in a different row. Modify the last value, and their x-coordinate will change. The 2nd value modifies which tile it is (so you could spell something entirely different), and the third attribute... well, it's a little more complicated, so perhaps we'll leave it for now (or if you're curious, you can read about it on nesdev's wiki here:
-https://www.nesdev.org/wiki/The_frame_and_NMIs and
-https://www.nesdev.org/wiki/NMI_thread ).
+https://www.nesdev.org/wiki/PPU_OAM
 
 As for functions, well, technically you can include them anywhere - the order of your code mostly doesn't matter as long as the control flow of your program works. If you've got the appropriate jmps, jsrs and whatnot, you should be fine (if I'm being honest, looking over my code I can see some spots where maybe a little more organization might improve its readability!)
 
