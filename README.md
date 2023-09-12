@@ -1,6 +1,6 @@
 # nes-hello-world
 
-<h1>"Hello, World"</h1>
+<h1>"Hello World!"</h1>
 
 Have you ever wanted to code for the NES, but you didn't know how? Do you want 8-bit programming knowledge, but instead you're stuck with 16 bits of fear? (That's trying to be a joke.) Want to write the next Super Mario Bros.? Your journey begins here! This is my version of "Hello, World" for the NES, and I offer the code to you as an opportunity to begin learning to program for the NES/ASM 6502.
 
@@ -24,7 +24,7 @@ A lot of NES programmers use a different compiler than VASM, ca65 (which is a co
 Assuming you've successfully followed the steps to compile above, you should now have an .nes file, "helloworld.nes". This file can be run in any NES (Nintendo Entertainment System) emulator. I tend to use Nestopia, but other NES developers really seem to enjoy FCEUX, so use whichever emulator you'd like!
 
 <h1>How to Use (and Learn From) "helloworld.asm"</h1>
-"Hello, World!" in Python is 1 line of code. <br/>
+"Hello World!" in Python is 1 line of code. <br/>
 In C++, it's 4 or 5 lines. <br/>
 In ASM 6502? <br/>
 Well... including spaces and comments we're clocking in at around 250 lines of code. Yikes! 
@@ -93,7 +93,7 @@ Here is where we have our tile data (obviously). We have two bitplanes for each 
 </ul>   
 (Also if you look really closely at my code, you should be able to make out the simpler tiles, such as the letters and numbers.)
 
-An excellent (but not too difficult) exercise would be to change the tiles from "Hello World" to something different, like "Hello [your name here]" Can you see how you might do this?
+An excellent (but not too difficult) exercise would be to change the tiles from "Hello World!" to something different, like "Hello [your name here]!" Can you see how you might do this?
 
 <h2>Next Steps</h2>
 
