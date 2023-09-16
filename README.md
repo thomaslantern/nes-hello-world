@@ -99,7 +99,7 @@ An excellent (but not too difficult) exercise would be to change the tiles from 
 
 Congratulations! If you've read this far, I'm hoping it's because you've succeeded in compiling this code, maybe even editing it to suit your own purposes. If there's still any confusion left, that's completely normal! I learn new things about ASM 6502 everyday, and with time your confidence with the language will grow as mine has. There's always more to learn!
 
-If you feel you've really absorbed what you can from this program, or you're hungry for something new, you could check out some of my other NES programs:
+If you feel you've really absorbed what you can from this program, take a look at my other sample programs. Each one teaches you something new about the NES, and then we put it all together to make a game called Birthday Blast! Here are the links:
 <ul>
   <li>https://github.com/thomaslantern/nes-basic-graphics</li>
   <li>https://github.com/thomaslantern/nes-basic-sound</li>
